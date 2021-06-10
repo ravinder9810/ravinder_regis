@@ -1,5 +1,7 @@
 package com.registration.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -7,15 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.registration.dto.UserRegistrationDto;
-import com.registration.service.UserService;
+import com.registration.service.IUserService;
 
 @Controller
 @RequestMapping("/registration")
 public class UserRegistrationController {
 
-	private UserService userService;
-
-	public UserRegistrationController(UserService userService) {
+	private IUserService userService;
+	// constructor based injection 
+	public UserRegistrationController(IUserService userService) {
 		super();
 		this.userService = userService;
 	}
@@ -30,8 +32,8 @@ public class UserRegistrationController {
 		return "registration";
 	}
 	
-	@PostMapping
-	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
+	@PostMapping()
+	public String registerUserAccount(@Valid @ModelAttribute("user") UserRegistrationDto registrationDto) {
 		userService.save(registrationDto);
 		return "redirect:/registration?success";
 	}

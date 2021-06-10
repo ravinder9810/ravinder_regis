@@ -5,6 +5,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.registration.dto.UserRegistrationDto;
 import com.registration.entities.User;
 
-public interface UserService extends UserDetailsService{
+public interface IUserService extends UserDetailsService{
 	User save(UserRegistrationDto registrationDto);
 }

@@ -18,12 +18,8 @@ import com.registration.entities.User;
 import com.registration.repository.UserRepository;
 
 
-
-
-
-
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements IUserService{
 
 	private UserRepository userRepository;
 	
@@ -49,12 +45,14 @@ public class UserServiceImpl implements UserService{
 	
 		User user = userRepository.findByEmail(username);
 		if(user == null) {
-			throw new UsernameNotFoundException("Invalid username or password.");
+			throw new UsernameNotFoundException("Invalid  userName or password.");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));		
 	}
 	
-	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+	
+	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles)
+	{
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 	

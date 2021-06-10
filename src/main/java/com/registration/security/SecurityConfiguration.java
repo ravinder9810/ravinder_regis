@@ -11,14 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.registration.service.UserService;
+import com.registration.service.IUserService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	
 	@Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -41,23 +41,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers(
-				 "/registration**","/",
-	                "/js/**",
-	                "/css/**",
-	                "/img/**").permitAll()
-		.anyRequest().authenticated();
-//		.and()
-//		.formLogin()
-//		.loginPage("/login")
-//		.permitAll()
-//		.and()
-//		.logout()
-//		.invalidateHttpSession(true)
-//		.clearAuthentication(true)
-//		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//		.logoutSuccessUrl("/login?logout")
-//		.permitAll();
+		.antMatchers( "/registration**","/" )
+		.permitAll()
+		.anyRequest().authenticated()
+		.and()
+		.formLogin()
+		.loginPage("/login")
+		.permitAll()
+		.and()
+		.logout()
+		.invalidateHttpSession(true)
+		.clearAuthentication(true)
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutSuccessUrl("/login?logout")
+		.permitAll();
 	}
 
 }
