@@ -36,7 +36,10 @@ public class User {
 	private String email;
 
 	
+//	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$" ,message = "password should contain minimun 8 characters :")
 	private String password;
+	
+//	private String role;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
@@ -50,14 +53,23 @@ public class User {
 		
 	}
 	
-	public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
+	public User(String firstName, String lastName, String email, String password,Collection<Role> role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
+		this.roles = role;
 	}
+//	
+//	public String getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(String role) {
+//		this.role = role;
+//	}
+
 	public Long getId() {
 		return id;
 	}
@@ -88,11 +100,15 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	public Collection<Role> getRoles() {
 		return roles;
 	}
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
+
+
+	
 
 }
