@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.registration.dto.UserRegistrationDto;
 import com.registration.exception.UserEmailAlreadyExistException;
@@ -34,14 +35,15 @@ public class UserRegistrationController {
 		return "registration";    // here registration means it will goto registration.html 
 	}
 	
-	@PostMapping()
+	@PostMapping()			// Binding Result : that holds the result of the validation and binding and contains errors that may have occurred. 
 	public String registerUserAccount(@Valid @ModelAttribute("user") UserRegistrationDto registrationDto,BindingResult bindingResult) throws UserEmailAlreadyExistException{
 		
 		if(bindingResult.hasErrors())
 		{
 			return "registration";
 		}
-		userService.save(registrationDto);
+		userService.register(registrationDto);
+		
 		return "redirect:/registration?success";
 	}
 }

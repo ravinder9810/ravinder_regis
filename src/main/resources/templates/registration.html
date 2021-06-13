@@ -21,8 +21,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#" th:href="@{/}">Registration and
-					Login Module</a>
+				<a class="navbar-brand" href="#" th:href="@{/}">Registration and Login Module</a>
 			</div>
 		</div>
 	</nav>
@@ -40,6 +39,12 @@
 				</div>
 
 				<h1>Registration Form ... </h1>
+				
+				
+				<!-- ablove  ("alert alert-info") means it displays the messgae in a color-->
+				<!-- below registration is about url in the controller layer -->
+				<!-- method is about which type of API is using  -->
+				<!-- user is about model attribute  -->
 
 				<form th:action="@{/registration}" method="post" th:object="${user}">
 					<div class="form-group">
@@ -74,14 +79,7 @@
 							<span> password should contain mininum 8 characters it must include {smaller letter, capital letter, special characters } </span>
 							
 							<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label" for="role"> Role </label> <input
-							id="role" class="form-control" th:field="*{role}"
-							required autofocus="autofocus" />
-					</div>
-					
+					</div>	
 					
 
 					<div class="form-group">
