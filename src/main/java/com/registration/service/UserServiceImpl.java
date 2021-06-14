@@ -50,10 +50,11 @@ public class UserServiceImpl implements IUserService{
 			{
 				logger.info(" user exist the Mail-Id ");
 				logger.info(" please try with another Mail-Id ");				
-			throw new UserEmailAlreadyExistException();
+				throw new UserEmailAlreadyExistException();
+				
 			}
-			logger.info(" you had successfully registered  ");
 			
+			logger.info(" you had successfully registered  ");
 			return userRepository.save(user);
 	}
 
