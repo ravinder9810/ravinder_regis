@@ -13,13 +13,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.registration.service.IUserService;
 
-@Configuration				// @Configuration is used on top of any class to declare that it provides one (or) more bean methods that can be processed by the spring container 
-
+@Configuration											// @Configuration is used on top of any class to declare that it provides one (or) more bean methods that can be processed by the spring container 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private IUserService userService;
+	private IUserService iUserService;
 	
 	@Bean			// 
     public BCryptPasswordEncoder passwordEncoder() {
@@ -29,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authentication = new DaoAuthenticationProvider();
-        authentication.setUserDetailsService(userService);
+        authentication.setUserDetailsService(iUserService);
         authentication.setPasswordEncoder(passwordEncoder());
         return authentication;
     }
@@ -37,12 +36,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
     protected void configure(AuthenticationManagerBuilder authentication) throws Exception {
 		authentication.authenticationProvider(authenticationProvider());
-    }
+	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		  //http.csrf().disable();
 		http.authorizeRequests()
-		.antMatchers( "/registration**","/**" )
+		.antMatchers( "/registration**" )
 		.permitAll()
 		.anyRequest().authenticated()
 		.and()

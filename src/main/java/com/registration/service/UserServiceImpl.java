@@ -25,21 +25,16 @@ import com.registration.repository.UserRepository;
 public class UserServiceImpl implements IUserService{
 	
 	Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	// Logger is from Simple Logging FAcade For JAVA(simply SLF4J)
 	
+	@Autowired									//	here I am injecting UserRepository because i am going to use methods of JPARepository to save data for registration
 	private UserRepository userRepository;
 	
-	@Autowired 
+	@Autowired 								//	here I am injecting BCryptPasswordEncoder because i am going to use password encrypting
 	private BCryptPasswordEncoder passwordEncoder;
 	
-				// here we are injecting USerREpository by Constructor based injector
-				// we can use by Autowired  injection also.
-	public UserServiceImpl(UserRepository userRepository) {
-		super();
-		this.userRepository = userRepository;
-	}
 
-	@Override
+
+	@Override													// throwing exception if email already exist 
 	public User register(UserRegistrationDto registrationDto) throws UserEmailAlreadyExistException
 	{
 		User user = new User(registrationDto.getFirstName(), 
@@ -63,6 +58,7 @@ public class UserServiceImpl implements IUserService{
 	{	
 		User user = userRepository.findByEmail(username);
 		if(user == null) {
+			logger.info("invalid userName or password");
 			throw new UsernameNotFoundException("Invalid  userName or password.");
 		}
 	return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));				

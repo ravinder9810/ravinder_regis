@@ -9,38 +9,36 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
 import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.JoinColumn;
 
-
-@Data				// Data is from LAMBOK by using this no need to write setters and getters
-@NoArgsConstructor // for every entity there should be an no argument constructor
-@AllArgsConstructor	//@AllArgsConstructor is for Parameterized contructor 
-@Entity
+@Data														// Data is from LAMBOK by using this no need to write setters and getters
+@NoArgsConstructor 												// for every entity there should be an no argument constructor
+@AllArgsConstructor											//@AllArgsConstructor is for Parameterized contructor 
+@Entity														// email should be unique for that we are using unique constraints for email
 @Table(name =  "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 	
-	@Id
+	@Id																// Id is to define that it is a primary key
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "first_name")
+	@Column(name = "first_name")							// if we want to give a differnt name from variable name we go with column annotation
 	private String firstName;
 	
 	@Column(name = "last_name")
 	private String lastName;
 	
-	
+																// if we use pattern then the below column(variable) has to follow that pattern otherwise it show user defined message
 	@Pattern(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$",message = "emial should not matched pattern !!")
 	private String email;
 
@@ -57,8 +55,9 @@ public class User {
 	
 	private Collection<Role> roles;
 	
-
-	public User(String firstName, String lastName, String email, String password,Collection<Role> role) {
+	//parameterized constructor
+	public User(String firstName, String lastName, String email, String password,Collection<Role> role) 
+	{
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -66,4 +65,11 @@ public class User {
 		this.password = password;
 		this.roles = role;
 	}
+	
+	
+	
+	
 }
+
+
+
